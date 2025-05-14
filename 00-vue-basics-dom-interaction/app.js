@@ -9,7 +9,7 @@ const app = Vue.createApp({
       this.counter += 1;
     },
     decreaseCounter: function () {
-      this.counter = this.counter === 0 ? 0 : this.counter - 1;
+      if (this.counter > 0) this.counter -= 1;
     }
   }
 });
