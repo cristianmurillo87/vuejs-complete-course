@@ -1,14 +1,17 @@
 const app = Vue.createApp({
   data: () => {
     return {
-      courseGoal: "Finish this course and learn Vue!",
+      courseLearningGoal: "Finish this course and learn Vue!",
+      courseMasteringGoal: "Master Vue and build amazing applications!",
       vueLink: "https://vuejs.org/"
     };
   },
   methods: {
-    outputGoal: () => {
+    outputGoal: function () {
       const randomNumber = Math.random();
-      return randomNumber < 0.5 ? "Learn Vue!" : "Master Vue!";
+      return randomNumber < 0.5
+        ? this.courseLearningGoal
+        : this.courseMasteringGoal;
     }
   }
 });
