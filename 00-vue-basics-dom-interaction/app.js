@@ -7,6 +7,14 @@ const app = Vue.createApp({
       confirmedName: ""
     };
   },
+  watch: {
+    // runs every time the value of counter changes
+    counter(value) {
+      if (value > 50) {
+        this.counter = 0;
+      }
+    }
+  },
   computed: {
     fullName() {
       if (!this.confirmedName) return "";
