@@ -16,7 +16,6 @@ const app = Vue.createApp({
   },
   computed: {
     result() {
-      if (this.counter === 0) return "";
       if (this.counter < this.secret) return "Not there yet";
       if (this.counter > this.secret) return "Too much!";
       return `${this.secret}`;
@@ -31,7 +30,6 @@ const app = Vue.createApp({
       return setTimeout(() => {
         if (this.counter === 0) return;
         this.counter = 0;
-        console.log("changed ", this.counter);
       }, 5000);
     }
   }
