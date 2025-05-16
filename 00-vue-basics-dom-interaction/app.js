@@ -1,11 +1,17 @@
 const app = Vue.createApp({
-  data: () => {
+  data: function () {
     return {
       counter: 0,
       name: "",
       id: "",
       confirmedName: ""
     };
+  },
+  computed: {
+    fullName() {
+      if (!this.confirmedName) return "";
+      return `Mr. ${this.confirmedName}`;
+    }
   },
   methods: {
     increaseCounter: function (step) {
@@ -18,10 +24,16 @@ const app = Vue.createApp({
     setName(event) {
       this.name = event.target.value;
     },
+    resetName() {
+      this.name = "";
+      this.confirmedName = "";
+    },
     setId(event, preffix) {
       this.id = event.target.value ? `${preffix}${event.target.value}` : "";
     },
-    submitForm: function () {},
+    submitForm: function () {
+      alert("Form submitted!!");
+    },
     confirmInput: function () {
       this.confirmedName = this.name;
     }

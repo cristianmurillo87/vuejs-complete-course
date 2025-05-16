@@ -24,8 +24,9 @@
       <button v-on:click="increaseCounter(2)">Add</button>
       <button v-on:click="decreaseCounter(1)">Remove</button>
       <p>Result: {{ counter }}</p>
-      <input type="text" v-on:input="setName" v-on:keyup.enter="confirmInput" />
-      <p>Your name : {{ confirmedName }}</p>
+      <input type="text" v-model="name" v-on:keyup.enter="confirmInput" />
+      <button v-on:click="resetName">Reset input</button>
+      <p>Your name : {{ fullName }}</p>
       <input type="text" v-on:input="setId($event, 'user-')" />
       <p>Your ID : {{ id }}</p>
       <!--submit.prevent is equivalent to event.preventDefault() -->
