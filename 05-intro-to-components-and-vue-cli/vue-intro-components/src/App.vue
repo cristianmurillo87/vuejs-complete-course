@@ -23,6 +23,17 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    toggleFavoriteStatus: function (event) {
+      const id = event.id;
+      this.friends.forEach((fr) => {
+        if (fr.id === id) {
+          fr.favorite = !fr.favorite;
+          return;
+        }
+      });
+    }
   }
 };
 </script>
@@ -35,10 +46,12 @@ export default {
     <ul>
       <friend-contact
         v-for="friend in friends"
+        :id="friend.id"
         :name="friend.name"
         :phone-number="friend.phone"
         :email-address="friend.email"
         :is-favorite="friend.favorite"
+        @toggle-favorite="toggleFavoriteStatus"
       ></friend-contact>
     </ul>
   </section>

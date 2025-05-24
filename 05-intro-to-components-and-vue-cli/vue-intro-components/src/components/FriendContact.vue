@@ -1,6 +1,10 @@
 <script>
 export default {
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     name: {
       type: String,
       required: true
@@ -19,6 +23,7 @@ export default {
       default: false
     }
   },
+  emits: ["toggle-favorite"],
   data: function () {
     return {
       showDetails: false,
@@ -30,7 +35,10 @@ export default {
       this.showDetails = !this.showDetails;
     },
     toggleIsFavorite: function () {
-      this.isContactFavorite = !this.isContactFavorite;
+      this.$emit("toggle-favorite", {
+        id: this.id
+      });
+      console.log("emitted event");
     }
   }
 };
