@@ -23,11 +23,10 @@ export default {
       default: false
     }
   },
-  emits: ["toggle-favorite"],
+  emits: ["toggle-favorite", "delete"],
   data: function () {
     return {
-      showDetails: false,
-      isContactFavorite: this.isFavorite
+      showDetails: false
     };
   },
   methods: {
@@ -38,21 +37,25 @@ export default {
       this.$emit("toggle-favorite", {
         id: this.id
       });
-      console.log("emitted event");
+    },
+    deleteFriend: function () {
+      this.$emit("delete", {
+        id: this.id
+      });
     }
   }
 };
 </script>
 <template>
   <li>
-    <h2>{{ name }} {{ isContactFavorite ? "(Favorite)" : "" }}</h2>
+    <h2>{{ name }} {{ isFavorite ? "(Favorite)" : "" }}</h2>
     <button @click="toggleIsFavorite">
-      {{ isContactFavorite ? "Unmark" : "Mark" }} as favorite
+      {{ isFavorite ? "Unmark" : "Mark" }} as favorite
     </button>
     <button @click="toggleDisplayDetails">
       {{ showDetails ? "Hide" : "Show" }} Details
     </button>
-
+    <button @click="deleteFriend">Delete</button>
     <ul v-if="showDetails">
       <li>
         <strong>Phone:</strong>

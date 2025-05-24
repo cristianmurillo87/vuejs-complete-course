@@ -1,5 +1,6 @@
 <script setup>
 import FriendContact from "./components/FriendContact.vue";
+import CreateFriend from "./components/CreateFriend.vue";
 </script>
 
 <script>
@@ -33,6 +34,13 @@ export default {
           return;
         }
       });
+    },
+    deleteFriend: function (event) {
+      this.friends = this.friends.filter((fr) => fr.id !== event.id);
+    },
+    onFriendSubmitted: function (event) {
+      const id = `${Math.ceil(Math.random(0, 1) * 3456)}-${Date.now()}`;
+      this.friends.push({ id, ...event });
     }
   }
 };
@@ -44,6 +52,7 @@ export default {
       <h1>My Friends</h1>
     </header>
     <ul>
+      <create-friend @friend-submitted="onFriendSubmitted"></create-friend>
       <friend-contact
         v-for="friend in friends"
         :id="friend.id"
@@ -52,6 +61,7 @@ export default {
         :email-address="friend.email"
         :is-favorite="friend.favorite"
         @toggle-favorite="toggleFavoriteStatus"
+        @delete="deleteFriend"
       ></friend-contact>
     </ul>
   </section>
