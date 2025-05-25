@@ -1,18 +1,14 @@
 <template>
-  <div>
-    <div>
-      <header>
-        <h3>{{ title }}</h3>
-        <button>Delete</button>
-      </header>
-    </div>
-    <div>
-      <p>{{ description }}</p>
-      <nav>
-        <a :href="link">View Resource</a>
-      </nav>
-    </div>
-  </div>
+  <base-card>
+    <header>
+      <h3>{{ title }}</h3>
+      <base-button mode="flat">Delete</base-button>
+    </header>
+    <p>{{ description }}</p>
+    <nav>
+      <a :href="link">View Resource</a>
+    </nav>
+  </base-card>
 </template>
 
 <script>
