@@ -1,18 +1,9 @@
 <template>
   <div>
     <app-header></app-header>
-    <badge-list></badge-list>
-    <user-info
-      :full-name="activeUser.name"
-      :info-text="activeUser.description"
-      :role="activeUser.role"
-    ></user-info>
-    <course-goals>
-      <template #default="slotProps">
-        <h2>{{ slotProps.item }}</h2>
-        <p>{{ slotProps["another-property"] }}</p>
-      </template>
-    </course-goals>
+    <button @click="setSelectedComponent('active-goals')">Active Goals</button>
+    <button @click="setSelectedComponent('manage-goals')">Manage Goals</button>
+    <component :is="selectedComponent"></component>
   </div>
 </template>
 
@@ -20,25 +11,25 @@
 // Components declared this way can only be used in this component,
 // they won't be available inside childred components
 import TheHeader from "./components/TheHeader.vue";
-import BadgeList from "./components/BadgeList.vue";
-import UserInfo from "./components/UserInfo.vue";
-import CourseGoals from "./components/CourseGoals.vue";
+import ActiveGoals from "./components/ActiveGoals.vue";
+import ManageGoals from "./components/ManageGoals.vue";
 
 export default {
-  components: {
-    "app-header": TheHeader,
-    "badge-list": BadgeList,
-    "user-info": UserInfo,
-    "course-goals": CourseGoals
-  },
+  components: { "app-header": TheHeader, ActiveGoals, ManageGoals },
   data() {
     return {
+      selectedComponent: "active-goals",
       activeUser: {
         name: "Cris Murillo",
         description: "Site owner and admin",
         role: "admin"
       }
     };
+  },
+  methods: {
+    setSelectedComponent: function (cmp) {
+      this.selectedComponent = cmp;
+    }
   }
 };
 </script>
