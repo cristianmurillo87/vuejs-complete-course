@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import ErrorAlert from "./ErrorAlert.vue";
+import ErrorAlert from "../base/ErrorAlert.vue";
 export default {
   components: {
     ErrorAlert

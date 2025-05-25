@@ -12,9 +12,9 @@
 <script>
 // Components declared this way can only be used in this component,
 // they won't be available inside childred components
-import TheHeader from "./components/TheHeader.vue";
-import ActiveGoals from "./components/ActiveGoals.vue";
-import ManageGoals from "./components/ManageGoals.vue";
+import TheHeader from "./components/layout/TheHeader.vue";
+import ActiveGoals from "./components/goals/ActiveGoals.vue";
+import ManageGoals from "./components/goals/ManageGoals.vue";
 
 export default {
   components: { "app-header": TheHeader, ActiveGoals, ManageGoals },
