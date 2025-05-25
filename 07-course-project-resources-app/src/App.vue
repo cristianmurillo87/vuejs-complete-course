@@ -1,18 +1,38 @@
-<script setup></script>
+<script>
+import StoredResources from "./components/learning-resources/StoredResources.vue";
 
-<template></template>
+export default {
+  components: {
+    StoredResources
+  },
+  data: function () {
+    return {
+      resources: [
+        {
+          id: "official-guide",
+          title: "Official Guide",
+          description: "The official Vue.js documentation",
+          link: "https://vuejs.org"
+        },
+        {
+          id: "google",
+          title: "Google",
+          description: "Learn to google...",
+          link: "https://google.com"
+        }
+      ]
+    };
+  }
+};
+</script>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+<template>
+  <stored-resources :resources="resources"></stored-resources>
+</template>
+
+<style>
+li {
+  margin: auto;
+  max-width: 40rem;
 }
 </style>

@@ -55,6 +55,7 @@ export default {
       <create-friend @friend-submitted="onFriendSubmitted"></create-friend>
       <friend-contact
         v-for="friend in friends"
+        :key="friend.id"
         :id="friend.id"
         :name="friend.name"
         :phone-number="friend.phone"
