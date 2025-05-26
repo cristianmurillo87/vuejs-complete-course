@@ -1,4 +1,15 @@
 <template>
+  <base-dialog v-if="formInvalid" title="Invalid Input" @close="confirmError">
+    <template #dialog-content>
+      <p>At least one of the provided values is invalid.</p>
+      <p>
+        Please make sure all the required information is provided and try again.
+      </p>
+    </template>
+    <template #dialog-actions>
+      <base-button @click="confirmError">Ok</base-button>
+    </template>
+  </base-dialog>
   <base-card>
     <form @submit.prevent="submit">
       <div class="form-control">
@@ -28,6 +39,11 @@
 <script>
 export default {
   inject: ["createResource"],
+  data: function () {
+    return {
+      formInvalid: false
+    };
+  },
   methods: {
     submit: function () {
       const title = this.$refs.titleInput.value;
@@ -37,9 +53,15 @@ export default {
         title.trim() === "" ||
         description.trim() === "" ||
         link.trim() === ""
-      )
+      ) {
+        this.formInvalid = true;
         return;
+      }
+
       this.createResource(title, description, link);
+    },
+    confirmError: function () {
+      this.formInvalid = false;
     }
   }
 };
