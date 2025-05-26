@@ -11,7 +11,9 @@
       >Create Resource</base-button
     >
   </base-card>
-  <component :is="selectedTab"></component>
+  <keep-alive>
+    <component :is="selectedTab"></component>
+  </keep-alive>
 </template>
 
 <script>
@@ -44,7 +46,8 @@ export default {
   },
   provide: function () {
     return {
-      resources: this.storedResources
+      resources: this.storedResources,
+      createResource: this.createResource
     };
   },
   computed: {
@@ -58,6 +61,17 @@ export default {
   methods: {
     setSelectedTab: function (tab) {
       this.selectedTab = tab;
+    },
+
+    createResource(title, description, link) {
+      const resource = {
+        id: new Date().toISOString(),
+        title,
+        description,
+        link
+      };
+      this.storedResources.push(resource);
+      this.selectedTab = "stored-resources";
     }
   }
 };
