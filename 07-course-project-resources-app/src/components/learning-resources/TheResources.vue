@@ -47,7 +47,8 @@ export default {
   provide: function () {
     return {
       resources: this.storedResources,
-      createResource: this.createResource
+      createResource: this.createResource,
+      deleteResource: this.deleteResource
     };
   },
   computed: {
@@ -72,6 +73,17 @@ export default {
       };
       this.storedResources.push(resource);
       this.selectedTab = "stored-resources";
+    },
+
+    deleteResource: function (resourceId) {
+      // use this instead of filtering to modify the array in-place because storedResources was injected
+      // into the child components
+      // otherwise, the UI wont be refreshed
+      const index = this.storedResources.findIndex(
+        (res) => res.id === resourceId
+      );
+      if (index === -1) return;
+      this.storedResources.splice(index, 1);
     }
   }
 };
