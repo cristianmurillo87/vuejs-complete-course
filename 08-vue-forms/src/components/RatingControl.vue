@@ -14,14 +14,18 @@
 
 <script>
 export default {
-  data: function () {
-    return {
-      activeOption: null
-    };
+  // modelValue is a reserver property in Vue so that the v-model attribute
+  // can be applied in a custom component
+  props: ["modelValue"],
+  emits: ["update:modelValue"],
+  computed: {
+    activeOption: function () {
+      return this.modelValue;
+    }
   },
   methods: {
     setActiveOption: function (option) {
-      this.activeOption = option;
+      this.$emit("update:modelValue", option);
     }
   }
 };

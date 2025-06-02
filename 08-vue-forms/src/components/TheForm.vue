@@ -89,7 +89,7 @@
         <label for="how-other">Other</label>
       </div>
     </div>
-    <div><rating-control></rating-control></div>
+    <div><rating-control v-model="rating"></rating-control></div>
     <div>
       <input
         type="checkbox"
@@ -117,11 +117,15 @@ export default {
       interest: ["news", "nothing"],
       how: null,
       confirmTerms: false,
-      userNameValidity: null
+      userNameValidity: null,
+      rating: "great"
     };
   },
   methods: {
-    submit: function () {},
+    submit: function () {
+      console.log("Rating");
+      console.log(this.rating);
+    },
     validateInput: function () {
       this.userNameValidity = this.userName === "" ? "invalid" : "valid";
     }
