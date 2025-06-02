@@ -13,21 +13,40 @@
 </template>
 
 <script>
-import UserItem from '../users/UserItem.vue';
+import UserItem from "../users/UserItem.vue";
 
 export default {
   components: {
     UserItem
   },
+  inject: ["users", "teams"],
   data() {
     return {
-      teamName: 'Test',
-      members: [
-        { id: 'u1', fullName: 'Max Schwarz', role: 'Engineer' },
-        { id: 'u2', fullName: 'Max Schwarz', role: 'Engineer' },
-      ],
+      teamName: "",
+      members: []
     };
   },
+  // called when the component is created, before it's  displayed on the screen
+  // but after the required data is loaded
+  created: function () {
+    const params = this.$route.params;
+    const teamId = params?.teamId;
+
+    const selectedTeam =
+      teamId && this.teams.find((team) => team.id === teamId);
+
+    if (!selectedTeam) {
+      this.$router.push("/teams");
+      return;
+    }
+
+    this.teamName = selectedTeam.name;
+    this.members = [];
+    selectedTeam?.members.forEach((id) => {
+      const user = this.users.find((user) => user.id === id);
+      user && this.members.push(user);
+    });
+  }
 };
 </script>
 
