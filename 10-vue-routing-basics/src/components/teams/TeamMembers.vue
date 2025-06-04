@@ -59,6 +59,9 @@ export default {
     // e.g. when navigating from /teams/t1 to /teams/t2
     teamId: function (id) {
       this.loadTeamMembers(id);
+    },
+    $route: function (route) {
+      console.log("Route: ", route);
     }
   }
 };
