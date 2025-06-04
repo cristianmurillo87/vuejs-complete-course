@@ -3,6 +3,9 @@
   <main>
     <router-view></router-view>
   </main>
+  <footer>
+    <router-view name="footerRouter"></router-view>
+  </footer>
 </template>
 
 <script>
