@@ -9,6 +9,7 @@
         :role="member.role"
       ></user-item>
     </ul>
+    <router-link to="/teams/t2">Go to team 2</router-link>
   </section>
 </template>
 
@@ -26,26 +27,40 @@ export default {
       members: []
     };
   },
+  methods: {
+    loadTeamMembers: function (route) {
+      const params = route.params;
+      const teamId = params?.teamId;
+
+      const selectedTeam =
+        teamId && this.teams.find((team) => team.id === teamId);
+
+      if (!selectedTeam) {
+        this.$router.push("/teams");
+        return;
+      }
+
+      this.teamName = selectedTeam.name;
+      this.members = [];
+      selectedTeam?.members.forEach((id) => {
+        const user = this.users.find((user) => user.id === id);
+        user && this.members.push(user);
+      });
+    }
+  },
   // called when the component is created, before it's  displayed on the screen
   // but after the required data is loaded
   created: function () {
-    const params = this.$route.params;
-    const teamId = params?.teamId;
-
-    const selectedTeam =
-      teamId && this.teams.find((team) => team.id === teamId);
-
-    if (!selectedTeam) {
-      this.$router.push("/teams");
-      return;
+    this.loadTeamMembers(this.$route);
+  },
+  watch: {
+    // run loadTeamMembers when this.$route changes
+    // otherwise the data won't be refreshed when the navigation data is updated
+    // and the new route is similar to the current one
+    // e.g. when navigating from /teams/t1 to /teams/t2
+    $route: function (newRoute) {
+      this.loadTeamMembers(newRoute);
     }
-
-    this.teamName = selectedTeam.name;
-    this.members = [];
-    selectedTeam?.members.forEach((id) => {
-      const user = this.users.find((user) => user.id === id);
-      user && this.members.push(user);
-    });
   }
 };
 </script>
