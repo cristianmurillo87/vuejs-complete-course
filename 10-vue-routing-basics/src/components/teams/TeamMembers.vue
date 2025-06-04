@@ -21,6 +21,8 @@ export default {
     UserItem
   },
   inject: ["users", "teams"],
+  // teamId will be passed through the router
+  props: ["teamId"],
   data() {
     return {
       teamName: "",
@@ -28,10 +30,7 @@ export default {
     };
   },
   methods: {
-    loadTeamMembers: function (route) {
-      const params = route.params;
-      const teamId = params?.teamId;
-
+    loadTeamMembers: function (teamId) {
       const selectedTeam =
         teamId && this.teams.find((team) => team.id === teamId);
 
@@ -51,15 +50,15 @@ export default {
   // called when the component is created, before it's  displayed on the screen
   // but after the required data is loaded
   created: function () {
-    this.loadTeamMembers(this.$route);
+    this.loadTeamMembers(this.teamId);
   },
   watch: {
     // run loadTeamMembers when this.$route changes
     // otherwise the data won't be refreshed when the navigation data is updated
     // and the new route is similar to the current one
     // e.g. when navigating from /teams/t1 to /teams/t2
-    $route: function (newRoute) {
-      this.loadTeamMembers(newRoute);
+    teamId: function (id) {
+      this.loadTeamMembers(id);
     }
   }
 };
