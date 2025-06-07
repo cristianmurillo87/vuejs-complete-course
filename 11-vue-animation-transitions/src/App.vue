@@ -3,10 +3,21 @@
     <div class="block" :class="{ animate: animatedBlock }"></div>
     <button @click="animateBlock">Animate</button>
   </div>
-  <base-modal @close="hideDialog" v-if="dialogIsVisible">
+  <div class="container">
+    <transition>
+      <p v-if="paragraphIsVisible">This is only sometimes visible...</p>
+    </transition>
+    <button @click="toggleParagraph">Toogle Paragraph</button>
+  </div>
+  <base-modal
+    @close="hideDialog"
+    v-if="dialogIsVisible"
+    :open="dialogIsVisible"
+  >
     <p>This is a test dialog!</p>
     <button @click="hideDialog">Close it!</button>
   </base-modal>
+
   <div class="container">
     <button @click="showDialog">Show Dialog</button>
   </div>
@@ -17,7 +28,8 @@ export default {
   data() {
     return {
       dialogIsVisible: false,
-      animatedBlock: false
+      animatedBlock: false,
+      paragraphIsVisible: false
     };
   },
   methods: {
@@ -29,6 +41,9 @@ export default {
     },
     animateBlock() {
       this.animatedBlock = true;
+    },
+    toggleParagraph() {
+      this.paragraphIsVisible = !this.paragraphIsVisible;
     }
   }
 };
@@ -79,6 +94,35 @@ button:active {
 .animate {
   /*transform: translateX(-150px);*/
   animation: animate-block 300ms ease-out forwards;
+}
+
+.v-enter-from {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.v-enter-active,
+.v-leave-active {
+  animation: animate-block 300ms ease-out;
+}
+
+.v-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.v-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.v-leave-active {
+  animation: animate-block 300ms ease-out;
+}
+
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 @keyframes animate-block {
