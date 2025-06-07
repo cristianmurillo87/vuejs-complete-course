@@ -1,7 +1,12 @@
 <template>
-  <div class="container">
+  <router-view v-slot="slotProps">
+    <transition name="fade-button" mode="out-in">
+      <component :is="slotProps.Component"></component>
+    </transition>
+  </router-view>
+  <!--div class="container">
     <users-list></users-list>
-  </div>
+  </!--div>
   <div class="container">
     <div class="block" :class="{ animate: animatedBlock }"></div>
     <button @click="animateBlock">Animate</button>
@@ -32,9 +37,9 @@
     <button @click="hideDialog">Close it!</button>
   </base-modal>
 
-  <div class="container">
+  <div-- class="container">
     <button @click="showDialog">Show Dialog</button>
-  </div>
+  </div-->
 </template>
 
 <script>
