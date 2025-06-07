@@ -4,7 +4,16 @@
     <button @click="animateBlock">Animate</button>
   </div>
   <div class="container">
-    <transition>
+    <transition
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @before-leave="beforeLeave"
+      @leave="leave"
+      @after-leave="afterLeave"
+      @enter-cancelled="enterCancelled"
+      @leave-cancelled="leaveCancelled"
+      :css="false"
+    >
       <p v-if="paragraphIsVisible">This is only sometimes visible...</p>
     </transition>
     <button @click="toggleParagraph">Toogle Paragraph</button>
@@ -32,7 +41,9 @@ export default {
       dialogIsVisible: false,
       animatedBlock: false,
       paragraphIsVisible: false,
-      usersVisible: false
+      usersVisible: false,
+      enterInterval: null,
+      leaveInterval: null
     };
   },
   methods: {
@@ -53,6 +64,39 @@ export default {
     },
     hideUsers() {
       this.usersVisible = false;
+    },
+    beforeEnter(el) {
+      el.style.opacity = 0;
+    },
+    enter(el, done) {
+      let round = 0;
+      this.enterInterval = setInterval(() => {
+        el.style.opacity = round * 0.01;
+        round += 1;
+        if (round > 100) {
+          clearInterval(this.enterInterval);
+          done();
+        }
+      }, 20);
+    },
+    beforeLeave(el) {},
+    leave(el, done) {
+      let round = 100;
+      this.leaveInterval = setInterval(() => {
+        el.style.opacity = round * 0.01;
+        round -= 1;
+        if (round <= 0) {
+          clearInterval(this.leaveInterval);
+          done();
+        }
+      }, 20);
+    },
+    afterLeave(el) {},
+    enterCancelled() {
+      cancelInterval(this.enterInterval);
+    },
+    leaveCancelled() {
+      cancelInterval(this.leaveInterval);
     }
   }
 };
@@ -103,35 +147,6 @@ button:active {
 .animate {
   /*transform: translateX(-150px);*/
   animation: animate-block 300ms ease-out forwards;
-}
-
-.v-enter-from {
-  opacity: 0;
-  transform: translateY(-30px);
-}
-
-.v-enter-active,
-.v-leave-active {
-  animation: animate-block 300ms ease-out;
-}
-
-.v-enter-to {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.v-leave-from {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.v-leave-active {
-  animation: animate-block 300ms ease-out;
-}
-
-.v-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
 }
 
 .fade-button-enter-from,
