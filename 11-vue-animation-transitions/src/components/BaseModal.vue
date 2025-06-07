@@ -1,7 +1,11 @@
 <template>
   <div v-if="open" class="backdrop" @click="$emit('close')"></div>
-  <transition name="modal">
-    <dialog open v-if="open">
+  <transition
+    name="modal-animation"
+    @before-enter="beforeEnter"
+    @before-leave="beforeLeave"
+  >
+    <dialog v-if="open" open>
       <slot></slot>
     </dialog>
   </transition>
@@ -10,7 +14,15 @@
 <script>
 export default {
   props: ["open"],
-  emits: ["close"]
+  emits: ["close"],
+  methods: {
+    beforeEnter(el) {
+      console.log("Before enter", el);
+    },
+    beforeLeave(el) {
+      console.log("Before leave", el);
+    }
+  }
 };
 </script>
 
@@ -39,12 +51,22 @@ dialog {
   border: none;
 }
 
-.modal-enter-active {
-  animation: modal 500ms ease-out;
+.modal-animation-enter-active {
+  animation: modal 0.5s ease-out;
 }
 
-.modal-enter-leave {
-  animation: modal 500ms ease-in reverse;
+.modal-animation-leave-active {
+  animation: modal 0.5s ease-in reverse;
+}
+
+.modal-animation-enter-from,
+.modal-animation-leave-to {
+  opacity: 0;
+}
+
+.modal-animation-enter-to,
+.modal-animation-leave-from {
+  opacity: 1;
 }
 
 @keyframes modal {

@@ -9,11 +9,13 @@
     </transition>
     <button @click="toggleParagraph">Toogle Paragraph</button>
   </div>
-  <base-modal
-    @close="hideDialog"
-    v-if="dialogIsVisible"
-    :open="dialogIsVisible"
-  >
+  <div class="container">
+    <transition name="fade-button" mode="out-in">
+      <button v-if="!usersVisible" @click="showUsers">Show users</button>
+      <button v-else @click="hideUsers">Hide users</button>
+    </transition>
+  </div>
+  <base-modal @close="hideDialog" :open="dialogIsVisible">
     <p>This is a test dialog!</p>
     <button @click="hideDialog">Close it!</button>
   </base-modal>
@@ -29,7 +31,8 @@ export default {
     return {
       dialogIsVisible: false,
       animatedBlock: false,
-      paragraphIsVisible: false
+      paragraphIsVisible: false,
+      usersVisible: false
     };
   },
   methods: {
@@ -44,6 +47,12 @@ export default {
     },
     toggleParagraph() {
       this.paragraphIsVisible = !this.paragraphIsVisible;
+    },
+    showUsers() {
+      this.usersVisible = true;
+    },
+    hideUsers() {
+      this.usersVisible = false;
     }
   }
 };
@@ -123,6 +132,24 @@ button:active {
 .v-leave-to {
   opacity: 0;
   transform: translateY(30px);
+}
+
+.fade-button-enter-from,
+.fade-button-leave-to {
+  opacity: 0;
+}
+
+.fade-button-enter-to,
+.fade-button-leave-from {
+  opacity: 1;
+}
+
+.fade-button-enter-active {
+  transition: opacity 0.3s ease-out;
+}
+
+.fade-button-leave-active {
+  transition: opacity 0.3s ease-in;
 }
 
 @keyframes animate-block {
