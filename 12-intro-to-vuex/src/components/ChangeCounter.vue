@@ -13,7 +13,7 @@ export default {
         value: 10
       });
     }*/
-    ...mapActions(["increment", "increase"])
+    ...mapActions("counter", ["increment", "increase"])
   }
 };
 </script>

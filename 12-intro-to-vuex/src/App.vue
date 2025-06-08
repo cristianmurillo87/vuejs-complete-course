@@ -27,7 +27,9 @@ export default {
   },
   methods: {
     addOne() {
-      this.$store.commit("increment");
+      this.$store.commit({
+        type: "counter/increment"
+      });
     }
   },
   computed: {
