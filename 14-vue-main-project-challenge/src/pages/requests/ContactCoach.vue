@@ -31,6 +31,12 @@ export default {
         this.formIsValid = false
         return
       }
+      this.$store.dispatch('requests/contactCoach', {
+        message: this.message,
+        email: this.email,
+        coachId: this.$route.id,
+      })
+      this.$router.replace('/coaches')
     },
   },
 }
