@@ -34,7 +34,7 @@ export default {
       this.$store.dispatch('requests/contactCoach', {
         message: this.message,
         email: this.email,
-        coachId: this.$route.id,
+        coachId: this.$route.params.id,
       })
       this.$router.replace('/coaches')
     },
