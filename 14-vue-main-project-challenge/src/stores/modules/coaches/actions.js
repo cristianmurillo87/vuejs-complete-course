@@ -1,7 +1,8 @@
 export default {
-  registerCoach(context, data) {
+  async registerCoach(context, data) {
+    const userId = context.rootGetters.userId
+
     const coachData = {
-      id: context.rootGetters.userId,
       firstName: data.first,
       lastName: data.last,
       description: data.desc,
@@ -9,6 +10,42 @@ export default {
       areas: data.areas,
     }
 
-    context.commit('registerCoach', coachData)
+    const response = await fetch(
+      `https://react-http-68e31-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(coachData),
+      }
+    )
+
+    if (!response.ok) {
+    }
+
+    context.commit('registerCoach', {
+      ...coachData,
+      id: userId,
+    })
+  },
+  async loadCoaches(context) {
+    const response = await fetch(
+      `https://react-http-68e31-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
+    )
+
+    const responseData = await response.json()
+
+    if (!response.ok) {
+    }
+
+    const coaches = Object.keys(responseData).map((key) => {
+      return {
+        firstName: responseData[key].firstName,
+        lastName: responseData[key].lastName,
+        description: responseData[key].description,
+        hourlyRate: responseData[key].hourlyRate,
+        areas: responseData[key].areas,
+      }
+    })
+
+    context.commit('setCoaches', coaches)
   },
 }
