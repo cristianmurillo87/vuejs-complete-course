@@ -4,7 +4,7 @@
       <h1><router-link to="/">Find a coach</router-link></h1>
       <ul>
         <li>
-          <router-link to="/coaches">All oaches</router-link>
+          <router-link to="/coaches">All coaches</router-link>
           <router-link to="/requests">Requests</router-link>
         </li>
       </ul>
