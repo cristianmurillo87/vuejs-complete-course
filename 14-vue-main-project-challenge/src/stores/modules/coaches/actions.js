@@ -34,10 +34,12 @@ export default {
     const responseData = await response.json()
 
     if (!response.ok) {
+      throw new Error(responseData.error ?? 'Failed to fetch!')
     }
 
     const coaches = Object.keys(responseData).map((key) => {
       return {
+        id: key,
         firstName: responseData[key].firstName,
         lastName: responseData[key].lastName,
         description: responseData[key].description,

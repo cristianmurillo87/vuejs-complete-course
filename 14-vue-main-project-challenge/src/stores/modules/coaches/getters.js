@@ -1,5 +1,6 @@
 export default {
   coaches(state) {
+    console.log('coaches', state.coaches)
     return state.coaches
   },
   hasCoaches(state) {

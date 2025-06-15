@@ -1,4 +1,7 @@
 <template>
+  <base-dialog :show="!!error" title="An error occurred!" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
   <section>
     <coach-filter @change-filter="setFilters"></coach-filter>
   </section>
@@ -40,6 +43,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      error: null,
       activeFilters: {
         frontend: true,
         backend: true,
@@ -82,8 +86,18 @@ export default {
     },
     async loadCoaches() {
       this.isLoading = true
-      await this.$store.dispatch('coaches/loadCoaches')
-      this.isLoading = false
+
+      try {
+        await this.$store.dispatch('coaches/loadCoaches')
+      } catch (err) {
+        this.error =
+          err.message ?? 'An error ocurred while fetching coaches data...Please try again later.'
+      } finally {
+        this.isLoading = false
+      }
+    },
+    handleError() {
+      this.error = null
     },
   },
 }
