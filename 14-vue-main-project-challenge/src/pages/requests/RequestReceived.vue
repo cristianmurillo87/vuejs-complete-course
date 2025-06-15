@@ -49,7 +49,7 @@ export default {
       this.isLoading = true
       this.error = null
       try {
-        this.$store.dispatch('requests/getRequests')
+        await this.$store.dispatch('requests/getRequests')
       } catch (err) {
         this.error = err.message ?? 'An error occurred while fetching requests'
       } finally {

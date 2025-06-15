@@ -8,7 +8,7 @@
   <section>
     <base-card>
       <div class="controls">
-        <base-button link mode="outline" @click="loadCoaches">Refresh</base-button>
+        <base-button link mode="outline" @click="loadCoaches(true)">Refresh</base-button>
         <base-button v-if="!isCoach && !isLoading" link :to="'/register'"
           >Register as coach</base-button
         >
@@ -84,11 +84,11 @@ export default {
     setFilters(filters) {
       this.activeFilters = filters
     },
-    async loadCoaches() {
+    async loadCoaches(refresh = false) {
       this.isLoading = true
 
       try {
-        await this.$store.dispatch('coaches/loadCoaches')
+        await this.$store.dispatch('coaches/loadCoaches', { forceRefresh: refresh })
       } catch (err) {
         this.error =
           err.message ?? 'An error ocurred while fetching coaches data...Please try again later.'
