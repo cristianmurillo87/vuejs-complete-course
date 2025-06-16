@@ -28,9 +28,9 @@ export default {
 
   async getRequests(context) {
     const coachId = context.rootGetters.userId
-
+    const token = context.rootGetters.token
     const response = await fetch(
-      `https://react-http-68e31-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json`
+      `https://react-http-68e31-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json?auth=${token}`
     )
     const responseData = await response.json()
 
@@ -40,14 +40,16 @@ export default {
       )
     }
 
-    const requests = Object.keys(responseData).map((key) => {
-      return {
-        id: key,
-        coachId,
-        userEmail: responseData[key].userEmail,
-        message: responseData[key].message,
-      }
-    })
+    const requests = responseData
+      ? Object.keys(responseData).map((key) => {
+          return {
+            id: key,
+            coachId,
+            userEmail: responseData[key].userEmail,
+            message: responseData[key].message,
+          }
+        })
+      : []
 
     context.commit('setRequests', requests)
   },

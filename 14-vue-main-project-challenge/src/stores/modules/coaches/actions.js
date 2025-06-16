@@ -29,8 +29,10 @@ export default {
   async loadCoaches(context, payload) {
     if (!(payload && payload.forceRefresh) && !context.getters.shouldUpdate) return
 
+    const token = context.rootGetters.token
+
     const response = await fetch(
-      `https://react-http-68e31-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
+      `https://react-http-68e31-default-rtdb.europe-west1.firebasedatabase.app/coaches.json?auth=${token}`
     )
 
     const responseData = await response.json()
