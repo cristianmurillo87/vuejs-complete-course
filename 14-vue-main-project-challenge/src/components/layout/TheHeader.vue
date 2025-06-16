@@ -5,14 +5,36 @@
       <ul>
         <li>
           <router-link to="/coaches">All coaches</router-link>
+        </li>
+        <li v-if="loggedin">
           <router-link to="/requests">Requests</router-link>
+        </li>
+        <li v-else>
+          <router-link to="/auth">Login</router-link>
+        </li>
+        <li v-if="loggedin">
+          <base-button @click="logout">Logout</base-button>
         </li>
       </ul>
     </nav>
   </header>
 </template>
 
-<script></script>
+<script>
+export default {
+  computed: {
+    loggedin() {
+      return this.$store.getters['authenticated']
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
+      this.$router.replace('/coaches')
+    },
+  },
+}
+</script>
 
 <style scoped>
 header {

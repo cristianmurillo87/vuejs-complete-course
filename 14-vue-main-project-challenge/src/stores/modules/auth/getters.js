@@ -5,4 +5,7 @@ export default {
   token(state) {
     return state.token
   },
+  authenticated(state) {
+    return !!state.token
+  },
 }

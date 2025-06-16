@@ -57,12 +57,17 @@ export default {
 
       this.isLoading = true
       try {
+        this.error = null
         const action = this.mode === 'login' ? 'login' : 'signup'
         await this.$store.dispatch(action, { email: this.email, password: this.password })
       } catch (error) {
         this.error = error
       } finally {
         this.isLoading = false
+        if (!this.error) {
+          const redirectUrl = `/${this.$route.query.redirect ?? 'coaches'}`
+          this.$router.replace(redirectUrl)
+        }
       }
     },
     switchMode() {
