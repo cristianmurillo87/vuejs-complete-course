@@ -14,6 +14,21 @@ export default {
   components: {
     TheHeader,
   },
+  computed: {
+    loggedout() {
+      return this.$store.getters.loggedout
+    },
+  },
+  watch: {
+    loggedout(curr, prev) {
+      if (curr && curr !== prev) {
+        this.$router.replace('/coaches')
+      }
+    },
+  },
+  created() {
+    this.$store.dispatch('tryLogin')
+  },
 }
 </script>
 

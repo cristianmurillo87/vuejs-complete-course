@@ -8,4 +8,7 @@ export default {
   authenticated(state) {
     return !!state.token
   },
+  autoLoggedOut(state) {
+    return state.loggedout
+  },
 }
