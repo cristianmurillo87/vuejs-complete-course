@@ -20,22 +20,26 @@
 </template>
 
 <script>
-import { ref, inject } from 'vue';
+import { ref, inject } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   setup() {
-    const addProduct = inject('addProduct');
+    const addProduct = inject('addProduct')
+    const router = useRouter()
 
-    const enteredTitle = ref('');
-    const enteredPrice = ref(null);
-    const enteredDescription = ref('');
+    const enteredTitle = ref('')
+    const enteredPrice = ref(null)
+    const enteredDescription = ref('')
 
     function submitForm() {
       addProduct({
         title: enteredTitle,
         description: enteredDescription,
         price: enteredPrice,
-      });
+      })
+
+      router.push('/products')
     }
 
     return {
@@ -43,9 +47,9 @@ export default {
       enteredPrice,
       enteredDescription,
       submitForm,
-    };
+    }
   },
-};
+}
 </script>
 
 <style scoped>
