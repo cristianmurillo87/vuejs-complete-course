@@ -12,13 +12,15 @@
 </template>
 
 <script>
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, watch } from 'vue'
 
 export default {
   setup() {
     // ref can be used with aany data type
     const firstName = ref('Cristian')
     const lastName = ref('Murillo')
+    const userAge = ref(30)
+    const userName = ref('')
 
     // reactive must always be passed and object
     const user = reactive({
@@ -30,8 +32,17 @@ export default {
       return firstName.value + ' ' + lastName.value
     })
 
+    watch([userAge, userName], (currentValues, previousValues) => {
+      console.log('Old age:', previousValues[0])
+      console.log('New age:', currentValues[0])
+
+      console.log('Old username:', previousValues[1])
+      console.log('New username:', currentValues[1])
+    })
+
     const setAge = (age) => {
       user.age = age
+      userAge.value = age
     }
 
     const setFirstName = (event) => {
