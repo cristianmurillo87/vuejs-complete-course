@@ -6,7 +6,15 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import {
+  computed,
+  onBeforeMount,
+  onMounted,
+  onBeforeUpdate,
+  onUpdated,
+  onBeforeUnmount,
+  onUnmounted,
+} from 'vue'
 
 export default {
   props: ['firstName', 'lastName', 'age'],
@@ -19,6 +27,30 @@ export default {
     })
 
     console.log('context', context)
+
+    onBeforeMount(() => {
+      console.log('UserData: before mounted')
+    })
+
+    onMounted(() => {
+      console.log('UserData: mounted')
+    })
+
+    onBeforeUpdate(() => {
+      console.log('UserData: before updated')
+    })
+
+    onUpdated(() => {
+      console.log('UserData: mounted')
+    })
+
+    onBeforeUnmount(() => {
+      console.log('UserData: before unmounted')
+    })
+
+    onUnmounted(() => {
+      console.log('UserData: unmounted')
+    })
 
     return {
       userName,
